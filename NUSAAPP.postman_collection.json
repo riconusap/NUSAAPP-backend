@@ -1,0 +1,2587 @@
+{
+  "info": {
+    "name": "NUSAAPP Backend API",
+    "description": "Complete API collection for NUSAAPP Backend - Garden Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{auth_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set(\"auth_token\", jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"superadmin@nusaapp.com\",\n  \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/profile",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"email\": \"updated@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/profile",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"current_password\": \"password\",\n  \"password\": \"newpassword123\",\n  \"password_confirmation\": \"newpassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/password",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "password"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users?search=&role=&per_page=15",
+              "host": ["{{base_url}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "role",
+                  "value": ""
+                },
+                {
+                  "key": "per_page",
+                  "value": "15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/:id",
+              "host": ["{{base_url}}"],
+              "path": ["users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New User\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"password123\",\n  \"employee_id\": 1,\n  \"roles\": [\"gardener\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": ["{{base_url}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"email\": \"updated@example.com\",\n  \"employee_id\": 1,\n  \"roles\": [\"site-leader\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/:id",
+              "host": ["{{base_url}}"],
+              "path": ["users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/:id",
+              "host": ["{{base_url}}"],
+              "path": ["users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "List Roles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/roles?search=&with_permissions=&per_page=15",
+              "host": ["{{base_url}}"],
+              "path": ["roles"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "with_permissions",
+                  "value": ""
+                },
+                {
+                  "key": "per_page",
+                  "value": "15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Role Access Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/roles/:id",
+              "host": ["{{base_url}}"],
+              "path": ["roles", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"finance-admin\",\n  \"guard_name\": \"web\",\n  \"permissions\": [\"view_transactions\", \"create_transactions\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/roles",
+              "host": ["{{base_url}}"],
+              "path": ["roles"]
+            }
+          }
+        },
+        {
+          "name": "Update Role",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"finance-admin\",\n  \"permissions\": [\"view_transactions\", \"create_transactions\", \"edit_transactions\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/roles/:id",
+              "host": ["{{base_url}}"],
+              "path": ["roles", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Role",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/roles/:id",
+              "host": ["{{base_url}}"],
+              "path": ["roles", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Permissions",
+      "item": [
+        {
+          "name": "List Permissions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/permissions?search=&per_page=15",
+              "host": ["{{base_url}}"],
+              "path": ["permissions"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "per_page",
+                  "value": "15"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "List Employees",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/employees?search=&gender=&status=&per_page=15",
+              "host": ["{{base_url}}"],
+              "path": ["employees"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "gender",
+                  "value": ""
+                },
+                {
+                  "key": "status",
+                  "value": ""
+                },
+                {
+                  "key": "per_page",
+                  "value": "15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Employee\",\n  \"email\": \"employee@example.com\",\n  \"phone\": \"081234567890\",\n  \"id_card_number\": \"3201234567890001\",\n  \"gender\": \"Male\",\n  \"date_of_birth\": \"1995-06-20\",\n  \"address\": \"Jl. Address\",\n  \"city\": \"Jakarta\",\n  \"province\": \"DKI Jakarta\",\n  \"postal_code\": \"12345\",\n  \"status\": \"Active\",\n  \"hire_date\": \"2026-03-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/employees",
+              "host": ["{{base_url}}"],
+              "path": ["employees"]
+            }
+          }
+        },
+        {
+          "name": "Get Employee",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/employees/:id",
+              "host": ["{{base_url}}"],
+              "path": ["employees", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"email\": \"updated@example.com\",\n  \"phone\": \"081234567895\",\n  \"status\": \"Inactive\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/employees/:id",
+              "host": ["{{base_url}}"],
+              "path": ["employees", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/employees/:id",
+              "host": ["{{base_url}}"],
+              "path": ["employees", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employee Contracts",
+      "item": [
+        {
+          "name": "List Employee Contracts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/employee-contracts?employee_id=1&contract_type=&status=",
+              "host": ["{{base_url}}"],
+              "path": ["employee-contracts"],
+              "query": [
+                {
+                  "key": "employee_id",
+                  "value": ""
+                },
+                {
+                  "key": "contract_type",
+                  "value": "",
+                  "description": "Permanent, Contract, Freelance, Internship"
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Active, Expired, Terminated"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Employee Contract",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employee_id\": 1,\n  \"contract_type\": \"Permanent\",\n  \"start_date\": \"2026-03-01\",\n  \"end_date\": null,\n  \"base_salary\": 5000000,\n  \"allowances\": 500000,\n  \"position\": \"Senior Gardener\",\n  \"status\": \"Active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/employee-contracts",
+              "host": ["{{base_url}}"],
+              "path": ["employee-contracts"]
+            }
+          }
+        },
+        {
+          "name": "Get Employee Contract",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/employee-contracts/:id",
+              "host": ["{{base_url}}"],
+              "path": ["employee-contracts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Employee Contract",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"base_salary\": 5500000,\n  \"allowances\": 600000,\n  \"position\": \"Lead Gardener\",\n  \"status\": \"Active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/employee-contracts/:id",
+              "host": ["{{base_url}}"],
+              "path": ["employee-contracts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Employee Contract",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/employee-contracts/:id",
+              "host": ["{{base_url}}"],
+              "path": ["employee-contracts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leave Requests",
+      "item": [
+        {
+          "name": "List Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tasks?area_id=1&assigned_to_id=1&status=&priority=&task_type=&overdue=&search=",
+              "host": ["{{base_url}}"],
+              "path": ["tasks"],
+              "query": [
+                {
+                  "key": "area_id",
+                  "value": ""
+                },
+                {
+                  "key": "assigned_to_id",
+                  "value": ""
+                },
+                {
+                  "key": "status",
+                  "value": ""
+                },
+                {
+                  "key": "priority",
+                  "value": ""
+                },
+                {
+                  "key": "task_type",
+                  "value": ""
+                },
+                {
+                  "key": "overdue",
+                  "value": ""
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"area_id\": 1,\n  \"assigned_to_id\": 1,\n  \"title\": \"Weekly Grass Cutting\",\n  \"description\": \"Cut grass in all zones\",\n  \"task_type\": \"Weekly\",\n  \"priority\": \"High\",\n  \"status\": \"To Do\",\n  \"due_date\": \"2026-03-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tasks",
+              "host": ["{{base_url}}"],
+              "path": ["tasks"]
+            }
+          }
+        },
+        {
+          "name": "Assign Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assigned_to_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tasks/:id/assign",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ":id", "assign"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Task",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tasks/:id",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Task Title\",\n  \"description\": \"Updated description\",\n  \"status\": \"In Progress\",\n  \"priority\": \"Medium\",\n  \"due_date\": \"2026-03-20\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tasks/:id",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Task",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tasks/:id",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Task Logs",
+      "item": [
+        {
+          "name": "List Task Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/task-logs?task_id=1&employee_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["task-logs"],
+              "query": [
+                {
+                  "key": "task_id",
+                  "value": ""
+                },
+                {
+                  "key": "employee_id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Task Log",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"task_id\": 1,\n  \"employee_id\": 1,\n  \"log_type\": \"Status Change\",\n  \"description\": \"Task status changed to In Progress\",\n  \"logged_at\": \"2026-03-04T10:30:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/task-logs",
+              "host": ["{{base_url}}"],
+              "path": ["task-logs"]
+            }
+          }
+        },
+        {
+          "name": "Get Task Log",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/task-logs/:id",
+              "host": ["{{base_url}}"],
+              "path": ["task-logs", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Task Log",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/task-logs/:id",
+              "host": ["{{base_url}}"],
+              "path": ["task-logs", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        {
+          "name": "List Attendances",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attendances?employee_id=1&site_id=1&date=&start_date=&end_date=&status=",
+              "host": ["{{base_url}}"],
+              "path": ["attendances"],
+              "query": [
+                {
+                  "key": "employee_id",
+                  "value": ""
+                },
+                {
+                  "key": "site_id",
+                  "value": ""
+                },
+                {
+                  "key": "date",
+                  "value": ""
+                },
+                {
+                  "key": "start_date",
+                  "value": ""
+                },
+                {
+                  "key": "end_date",
+                  "value": ""
+                },
+                {
+                  "key": "status",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Clock In",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employee_id\": 1,\n  \"site_id\": 1,\n  \"latitude\": -6.175100,\n  \"longitude\": 106.865000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/attendances/clock-in",
+              "host": ["{{base_url}}"],
+              "path": ["attendances", "clock-in"]
+            }
+          }
+        },
+        {
+          "name": "Clock Out",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employee_id\": 1,\n  \"site_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/attendances/clock-out",
+              "host": ["{{base_url}}"],
+              "path": ["attendances", "clock-out"]
+            }
+          }
+        },
+        {
+          "name": "Get Attendance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attendances/:id",
+              "host": ["{{base_url}}"],
+              "path": ["attendances", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Areas",
+      "item": [
+        {
+          "name": "List Areas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/areas?site_id=1&search=",
+              "host": ["{{base_url}}"],
+              "path": ["areas"],
+              "query": [
+                {
+                  "key": "site_id",
+                  "value": ""
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Area",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"site_id\": 1,\n  \"area_name\": \"Zone A - Front Garden\",\n  \"description\": \"Main entrance garden area with tropical plants\",\n  \"size_sqm\": 500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/areas",
+              "host": ["{{base_url}}"],
+              "path": ["areas"]
+            }
+          }
+        },
+        {
+          "name": "Get Area",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/areas/:id",
+              "host": ["{{base_url}}"],
+              "path": ["areas", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Area",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"area_name\": \"Zone A - Updated Name\",\n  \"description\": \"Updated description\",\n  \"size_sqm\": 550\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/areas/:id",
+              "host": ["{{base_url}}"],
+              "path": ["areas", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Area",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/areas/:id",
+              "host": ["{{base_url}}"],
+              "path": ["areas", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inventory",
+      "item": [
+        {
+          "name": "List Inventory Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/inventory-items?category=&consumable_only=&search=",
+              "host": ["{{base_url}}"],
+              "path": ["inventory-items"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": ""
+                },
+                {
+                  "key": "consumable_only",
+                  "value": ""
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Inventory Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"item_name\": \"Fertilizer NPK 16-16-16\",\n  \"category\": \"Fertilizer\",\n  \"unit\": \"kg\",\n  \"is_consumable\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/inventory-items",
+              "host": ["{{base_url}}"],
+              "path": ["inventory-items"]
+            }
+          }
+        },
+        {
+          "name": "List Site Inventories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/site-inventories?site_id=1&inventory_item_id=1&low_stock=",
+              "host": ["{{base_url}}"],
+              "path": ["site-inventories"],
+              "query": [
+                {
+                  "key": "site_id",
+                  "value": ""
+                },
+                {
+                  "key": "inventory_item_id",
+                  "value": ""
+                },
+                {
+                  "key": "low_stock",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Site Inventory",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"site_id\": 1,\n  \"inventory_item_id\": 1,\n  \"stock_quantity\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/site-inventories",
+              "host": ["{{base_url}}"],
+              "path": ["site-inventories"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clients",
+      "item": [
+        {
+          "name": "List Clients",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clients?search=",
+              "host": ["{{base_url}}"],
+              "path": ["clients"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"PT New Client\",\n  \"headquarter_address\": \"Jl. Address\",\n  \"pic_name\": \"John Doe\",\n  \"pic_phone\": \"081234567890\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/clients",
+              "host": ["{{base_url}}"],
+              "path": ["clients"]
+            }
+          }
+        },
+        {
+          "name": "Get Client",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clients/:id",
+              "host": ["{{base_url}}"],
+              "path": ["clients", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Client",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"PT Updated Client\",\n  \"headquarter_address\": \"Jl. New Address\",\n  \"pic_name\": \"Jane Doe\",\n  \"pic_phone\": \"081234567899\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/clients/:id",
+              "host": ["{{base_url}}"],
+              "path": ["clients", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Client",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clients/:id",
+              "host": ["{{base_url}}"],
+              "path": ["clients", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Client Contracts",
+      "item": [
+        {
+          "name": "List Client Contracts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/client-contracts?client_id=1&status=",
+              "host": ["{{base_url}}"],
+              "path": ["client-contracts"],
+              "query": [
+                {
+                  "key": "client_id",
+                  "value": ""
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Active, Expired, Terminated"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Client Contract",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": 1,\n  \"contract_number\": \"CON-2026-001\",\n  \"start_date\": \"2026-01-01\",\n  \"end_date\": \"2026-12-31\",\n  \"contract_value\": 180000000,\n  \"status\": \"Active\",\n  \"terms\": \"Monthly maintenance service\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/client-contracts",
+              "host": ["{{base_url}}"],
+              "path": ["client-contracts"]
+            }
+          }
+        },
+        {
+          "name": "Get Client Contract",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/client-contracts/:id",
+              "host": ["{{base_url}}"],
+              "path": ["client-contracts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Client Contract",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contract_value\": 200000000,\n  \"end_date\": \"2027-12-31\",\n  \"status\": \"Active\",\n  \"terms\": \"Updated terms\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/client-contracts/:id",
+              "host": ["{{base_url}}"],
+              "path": ["client-contracts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Client Contract",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/client-contracts/:id",
+              "host": ["{{base_url}}"],
+              "path": ["client-contracts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sites",
+      "item": [
+        {
+          "name": "List Sites",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/sites?client_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["sites"],
+              "query": [
+                {
+                  "key": "client_id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Site",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": 1,\n  \"site_name\": \"New Garden Site\",\n  \"address\": \"Jl. New Address\",\n  \"latitude\": -6.175,\n  \"longitude\": 106.865,\n  \"radius_meters\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/sites",
+              "host": ["{{base_url}}"],
+              "path": ["sites"]
+            }
+          }
+        },
+        {
+          "name": "Get Site",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/sites/:id",
+              "host": ["{{base_url}}"],
+              "path": ["sites", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Site",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"site_name\": \"Updated Site Name\",\n  \"address\": \"Jl. Updated Address\",\n  \"latitude\": -6.180,\n  \"longitude\": 106.870,\n  \"radius_meters\": 150\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/sites/:id",
+              "host": ["{{base_url}}"],
+              "path": ["sites", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Site",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/sites/:id",
+              "host": ["{{base_url}}"],
+              "path": ["sites", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payrolls",
+      "item": [
+        {
+          "name": "List Payrolls",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payrolls?employee_id=1&period_month=&period_year=&status=",
+              "host": ["{{base_url}}"],
+              "path": ["payrolls"],
+              "query": [
+                {
+                  "key": "employee_id",
+                  "value": ""
+                },
+                {
+                  "key": "period_month",
+                  "value": ""
+                },
+                {
+                  "key": "period_year",
+                  "value": ""
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Draft, Approved, Paid"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Generate Payroll from Attendance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employee_id\": 1,\n  \"period_month\": 3,\n  \"period_year\": 2026,\n  \"allowances\": 500000,\n  \"deductions\": 100000,\n  \"notes\": \"Payroll for March 2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/payrolls/generate",
+              "host": ["{{base_url}}"],
+              "path": ["payrolls", "generate"]
+            }
+          }
+        },
+        {
+          "name": "Create Payroll Manually",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employee_id\": 1,\n  \"period_month\": 3,\n  \"period_year\": 2026,\n  \"basic_salary\": 5000000,\n  \"total_days_worked\": 22,\n  \"total_hours_worked\": 176,\n  \"overtime_hours\": 8,\n  \"overtime_pay\": 231213.87,\n  \"allowances\": 500000,\n  \"deductions\": 100000,\n  \"status\": \"Draft\",\n  \"notes\": \"Manual payroll entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/payrolls",
+              "host": ["{{base_url}}"],
+              "path": ["payrolls"]
+            }
+          }
+        },
+        {
+          "name": "Get Payroll",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payrolls/:id",
+              "host": ["{{base_url}}"],
+              "path": ["payrolls", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Payroll",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"basic_salary\": 5500000,\n  \"allowances\": 600000,\n  \"deductions\": 150000,\n  \"status\": \"Approved\",\n  \"notes\": \"Updated notes\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/payrolls/:id",
+              "host": ["{{base_url}}"],
+              "path": ["payrolls", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mark Payroll as Paid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payrolls/:id/mark-as-paid",
+              "host": ["{{base_url}}"],
+              "path": ["payrolls", ":id", "mark-as-paid"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Payroll",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payrolls/:id",
+              "host": ["{{base_url}}"],
+              "path": ["payrolls", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoice Plans",
+      "item": [
+        {
+          "name": "List Invoice Plans",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoice-plans?client_contract_id=1&invoice_schedule=",
+              "host": ["{{base_url}}"],
+              "path": ["invoice-plans"],
+              "query": [
+                {
+                  "key": "client_contract_id",
+                  "value": ""
+                },
+                {
+                  "key": "invoice_schedule",
+                  "value": "",
+                  "description": "Monthly, Quarterly, Yearly, One-time"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Invoice Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_contract_id\": 1,\n  \"invoice_schedule\": \"Monthly\",\n  \"amount_per_invoice\": 15000000,\n  \"tax_percentage\": 11,\n  \"notes\": \"Monthly garden maintenance fee\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/invoice-plans",
+              "host": ["{{base_url}}"],
+              "path": ["invoice-plans"]
+            }
+          }
+        },
+        {
+          "name": "Get Invoice Plan",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoice-plans/:id",
+              "host": ["{{base_url}}"],
+              "path": ["invoice-plans", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Invoice Plan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invoice_schedule\": \"Quarterly\",\n  \"amount_per_invoice\": 45000000,\n  \"tax_percentage\": 11,\n  \"notes\": \"Updated to quarterly\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/invoice-plans/:id",
+              "host": ["{{base_url}}"],
+              "path": ["invoice-plans", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Invoice Plan",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoice-plans/:id",
+              "host": ["{{base_url}}"],
+              "path": ["invoice-plans", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "List Invoices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoices?client_contract_id=&status=&overdue_only=&search=&start_date=&end_date=",
+              "host": ["{{base_url}}"],
+              "path": ["invoices"],
+              "query": [
+                {
+                  "key": "client_contract_id",
+                  "value": ""
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Draft, Sent, Paid, Overdue, Cancelled"
+                },
+                {
+                  "key": "overdue_only",
+                  "value": "",
+                  "description": "true/false"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Search by invoice number"
+                },
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "description": "YYYY-MM-DD"
+                },
+                {
+                  "key": "end_date",
+                  "value": "",
+                  "description": "YYYY-MM-DD"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Generate Invoice from Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invoice_plan_id\": 1,\n  \"invoice_date\": \"2026-03-03\",\n  \"due_date\": \"2026-04-03\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/invoices/generate-from-plan",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", "generate-from-plan"]
+            }
+          }
+        },
+        {
+          "name": "Create Invoice Manually",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_contract_id\": 1,\n  \"invoice_plan_id\": 1,\n  \"invoice_number\": \"INV-202603-0001\",\n  \"invoice_date\": \"2026-03-03\",\n  \"due_date\": \"2026-04-03\",\n  \"amount\": 15000000,\n  \"tax_amount\": 1650000,\n  \"total_amount\": 16650000,\n  \"status\": \"Draft\",\n  \"notes\": \"Custom invoice\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/invoices",
+              "host": ["{{base_url}}"],
+              "path": ["invoices"]
+            }
+          }
+        },
+        {
+          "name": "Get Invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoices/:id",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Invoice",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invoice_date\": \"2026-03-05\",\n  \"due_date\": \"2026-04-05\",\n  \"amount\": 16000000,\n  \"tax_amount\": 1760000,\n  \"total_amount\": 17760000,\n  \"status\": \"Sent\",\n  \"notes\": \"Updated notes\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/invoices/:id",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mark Invoice as Paid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_method\": \"Bank Transfer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/invoices/:id/mark-as-paid",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", ":id", "mark-as-paid"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Invoice",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/invoices/:id",
+              "host": ["{{base_url}}"],
+              "path": ["invoices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "List Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transactions?transaction_type=&category=&start_date=&end_date=&payment_method=&search=",
+              "host": ["{{base_url}}"],
+              "path": ["transactions"],
+              "query": [
+                {
+                  "key": "transaction_type",
+                  "value": "",
+                  "description": "Income, Expense"
+                },
+                {
+                  "key": "category",
+                  "value": ""
+                },
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "description": "YYYY-MM-DD"
+                },
+                {
+                  "key": "end_date",
+                  "value": "",
+                  "description": "YYYY-MM-DD"
+                },
+                {
+                  "key": "payment_method",
+                  "value": ""
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Search by description"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Financial Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transactions/summary?start_date=2026-03-01&end_date=2026-03-31",
+              "host": ["{{base_url}}"],
+              "path": ["transactions", "summary"],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "2026-03-01"
+                },
+                {
+                  "key": "end_date",
+                  "value": "2026-03-31"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Transaction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transaction_date\": \"2026-03-03\",\n  \"transaction_type\": \"Expense\",\n  \"category\": \"Tools Purchase\",\n  \"amount\": 2500000,\n  \"payment_method\": \"Bank Transfer\",\n  \"description\": \"Purchase of gardening tools and equipment\",\n  \"receipt_path\": \"/storage/receipts/receipt001.pdf\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/transactions",
+              "host": ["{{base_url}}"],
+              "path": ["transactions"]
+            }
+          }
+        },
+        {
+          "name": "Get Transaction",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transactions/:id",
+              "host": ["{{base_url}}"],
+              "path": ["transactions", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Transaction",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transaction_date\": \"2026-03-05\",\n  \"amount\": 2600000,\n  \"description\": \"Updated description\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/transactions/:id",
+              "host": ["{{base_url}}"],
+              "path": ["transactions", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Transaction",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transactions/:id",
+              "host": ["{{base_url}}"],
+              "path": ["transactions", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
