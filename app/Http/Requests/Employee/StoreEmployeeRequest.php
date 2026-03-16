@@ -14,8 +14,9 @@ class StoreEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'site_id' => ['required', 'integer', 'exists:sites,id'],
             'nik' => ['required', 'string', 'unique:employees,nik', 'max:50'],
-            'nip' => ['required', 'string', 'unique:employees,nip', 'max:50'],
+            'nip' => ['prohibited'],
             'full_name' => ['required', 'string', 'max:255'],
             'profile_picture_path' => ['nullable', 'string'],
             'phone_number' => ['nullable', 'string', 'max:20'],

@@ -24,7 +24,7 @@ class SuperAdminSeeder extends Seeder
         // Create Super Admin Employee
         $employee = Employee::create([
             'nik' => 'EMP001',
-            'nip' => 'NIP001',
+            'nip' => 'NIPJKT260001',
             'full_name' => 'Super Admin',
             'email' => 'superadmin@nusaapp.com',
             'phone_number' => '081234567890',

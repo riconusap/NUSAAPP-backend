@@ -18,7 +18,7 @@ class UpdateEmployeeRequest extends FormRequest
 
         return [
             'nik' => ['sometimes', 'string', 'unique:employees,nik,' . $employeeId, 'max:50'],
-            'nip' => ['sometimes', 'string', 'unique:employees,nip,' . $employeeId, 'max:50'],
+            'nip' => ['prohibited'],
             'full_name' => ['sometimes', 'string', 'max:255'],
             'profile_picture_path' => ['nullable', 'string'],
             'phone_number' => ['nullable', 'string', 'max:20'],
