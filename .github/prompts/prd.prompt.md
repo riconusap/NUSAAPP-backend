@@ -9,7 +9,7 @@ You are a Senior Laravel Developer. Build a robust RESTful API for NUSA APP.
 
 ## STACK & STANDARDS
 - **Framework:** Laravel 11 (PHP 8.3).
-- **Database:** MySQL 8.0+ (Use UUIDs stored as string/char(36)).
+- **Database:** MySQL 8.0+.
 - **Auth:** Laravel Sanctum for SPA Authentication.
 - **Patterns:** Use Service Pattern for business logic (Payroll, Inventory, Billing).
 - **Features:** Spatie Permission (RBAC), Spatie MediaLibrary (File handling), Soft Deletes.
